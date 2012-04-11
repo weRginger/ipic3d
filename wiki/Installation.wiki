@@ -13,10 +13,11 @@ The following libraries are needed: <br>
 -'''KVF library''', used to parse the input file for Parsek. This library is provided with the parsek source code in the directory /kvf/src/. To build this library, change to the directory /kvf/src and type ''make''.
 
 When installing these libraries, we recommend to install as root, using:
-
+{{{
  ./configure
  make
  sudo make install
+}}}
 
 At the end the systems tells the path where the include files and the library has been installed. Make a note of it, it is needed to modify to your needs the make file.
 
