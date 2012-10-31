@@ -32,10 +32,10 @@ At the end the systems tells the path where the include files and the library ha
 - mpirun -np <# processors> iPIC3D <inputfile>
 
 For instance:
-
-mpirun -np 2 iPIC3D inputfile
-
-'''Note that the number of processors after -np should match the number of processors defined in /processtopology/VCtopology3D.h as XLEN times YLEN.'''
+{{{
+mpirun -np 2 iPIC3D GEM.inp
+}}}
+'''Note that the number of processors after -np should match the number of processors defined in /processtopology/VCtopology3D.h as XLEN times YLEN times ZLEN.'''
 
 
 ==Ubuntu==
