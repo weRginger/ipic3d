@@ -29,7 +29,7 @@ At the end the systems tells the path where the include files and the library ha
 
 == Run iPic3D ==
 
-- mpirun -np <# processors> iPIC3D <inputfile>
+- mpirun -np <# processors> iPIC3D <nome of inputfile>
 
 For instance:
 {{{
