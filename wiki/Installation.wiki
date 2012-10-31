@@ -1,16 +1,16 @@
-Parsek is a particle in cell (PIC) code based on the implicit moment method. It is the successor of CELESTE ([http://code.google.com/p/celeste/ web page of CELESTE]) but it is fully parallel and written in C++. The code was developed by Stefano Markdis, Enrico Camporeale, David Burgess and myself (Giovanni Lapenta). 
+iPIC3D is a particle in cell (PIC) code based on the implicit moment method. It is the successor of CELESTE ([http://code.google.com/p/celeste/ web page of CELESTE]) but it is fully parallel and written in C++. The code was developed by Stefano Markdis, Enrico Camporeale, David Burgess and myself (Giovanni Lapenta). 
 
 =Installation=
-== Before the installation: MPICH2 and required libraries ==
+== Before the installation required libraries ==
 
-Parsek compiles with mpicxx of '''MPICH2'''. MPICH2 is available at http://www.mcs.anl.gov/research/projects/mpich2/. 
+iPIC3D compiles with all tested MPI libraries. In particular we use regularly intel MPI, SGI MPI, MPICH2, OpenMPI. For example MPICH-2 is available at http://www.mcs.anl.gov/research/projects/mpich2/. 
 
 The following libraries are needed: <br>
--'''HDF5 1.6''' used for the output of the simulation data. This library can be downloaded at http://hdf.ncsa.uiuc.edu/HDF5/release/obtain516.html. '''Note that later versions of HDF5, such as the 1.8, are not compatible with Parsek'''. In order to build the HDF5 library, other two libraries must be installed:<br>
+-'''HDF5''' used for the output of the simulation data. This library can be downloaded at http://hdf.ncsa.uiuc.edu/HDF5. The latest version needs to be used (older ones are not compatible).
+ In order to build the HDF5 library, other two libraries can be installed first:<br>
 -'''szip''' library, availabe at ftp://ftp.hdfgroup.org/lib-external/szip/2.1/src/. <br>
 -'''zlib''' library, available at ftp://ftp.hdfgroup.org/lib-external/zlib/1.2/src. <br>
 
--'''KVF library''', used to parse the input file for Parsek. This library is provided with the parsek source code in the directory /kvf/src/. To build this library, change to the directory /kvf/src and type ''make''.
 
 When installing these libraries, we recommend to install as root, using:
 {{{
@@ -21,21 +21,21 @@ When installing these libraries, we recommend to install as root, using:
 
 At the end the systems tells the path where the include files and the library has been installed. Make a note of it, it is needed to modify to your needs the make file.
 
-== Install Parsek ==
+== Install iPIC3D ==
 
-- prepare a suitable makefile with the specific location of the KVF, HDF5, MPI include files and libraries. A template makefile is provided, but the environment variables INC_KVF, INC_HDF5, INC_MPI, LIB_KVF, LIB_HDF5, LIB_MPI must be set at the beginning of the makefile with the correct path for the KVF, HDF5, MPI include file, and libraries.
+- prepare a suitable makefile with the specific location of the KVF, HDF5, MPI include files and libraries. A template makefile is provided, but the environment variables  INC_HDF5, INC_MPI, LIB_HDF5, LIB_MPI must be set at the beginning of the makefile with the correct path for the HDF5, MPI include file, and libraries.
 
-- run the makefile, just typing ''make'' in the parsek directory. The makefile prepares the ParsekEM executable.
+- run the makefile, just typing ''make'' in the ipic3d directory. The makefile prepares the iPIC3D executable.
 
-== Run Parsek ==
+== Run iPic3D ==
 
-- mpirun -np <# processors> ParsekEM <inputfile>
+- mpirun -np <# processors> iPIC3D <inputfile>
 
 For instance:
 
-mpirun -np 2 ParsekEM inputfile.prit
+mpirun -np 2 iPIC3D inputfile
 
-'''Note that the number of processors after -np should match the number of processors defined in /processtopology/VCtopology.cpp as XLEN times YLEN.'''
+'''Note that the number of processors after -np should match the number of processors defined in /processtopology/VCtopology3D.h as XLEN times YLEN.'''
 
 
 ==Ubuntu==
@@ -131,34 +131,20 @@ ParticlesOutputCycle = each ParticlesOutputCycle, save the Particles data <br>
 FieldOutputCycle = each FieldOutputCycle, save the Field and energies data <br>
 RestartOutputCycle = each RestartOutputCycle, write the restart file<br>
 
-=== How to include new variables, read from the inputfile ===
-To modify the list of variables read from the input file, the files to change are:
-# CollectiveIO.h (Mother class)
-# Collective.h (subclass, here you define variables and new methods to retrieve the data)
-# Collective.cpp (you implement the methods to retrieve the data)
 
-== Parsek Output ==
-Parsek output is in the HDF5 format. There are two kind of output files:
-# '''proc0.hdf, proc1.hdf,....procN.hdf''' files (as many files as the number of prcessors). with all the information of the simulation. This file can be read only when the simulation is done
-# '''restart0.hdf, restart1.hdf, ..., restartN.hdf'''. These files contain all the information about particles  and fields to enable a restart. This file can be opened while parsek is running, and be used to mponitor the simulation
-
-
-
-===Read the HDF5 Output with Matlab===
-The output is in HDF5 and can be read with matlab using a special file (parsek2D.m for 2D). Once matlab has the data it can be displayed in any usual way. The files are in matlab/parsek. No need to call parsek2D.m first, as it is already called by the other files when needed.
 
 ==Parallel Topology==
 To change the number of processors and their topology:
 # change the call to mpirun (in mpi2D.sh) specifying the right total number of processors
-# change XLEN e YLEN in '''VCTopology.cpp''' in the subdirectory processtopology
+# change XLEN, YLEN, ZLEN in '''VCTopology3D.h''' in the subdirectory processtopology
 
-==Submitting a Parsek job on VIC==
+==Submitting a iPIC3D job on VIC==
 The VIC cluster uses the PBS system to submit jobs. To submit a job on VIC, use:
 
-# '''qsub mpi2D.sh'''
+# '''qsub mpi3D.nasa'''
 
-where ''mpi2D.sh'' is a script, that includes the number of processors and time required for the simulation. A typical script file, called ''mpi2D.sh'', can be found in the parsek directory.
-You need to modify the directory where your executable(ParsekEM) is, after cd, and the name of the inputfile for Parsek. In addition you need to choose the number of processors after -lnodes, and the time -l walltime.
+where ''mpi3D.nasa'' is a script, that includes the number of processors and time required for the simulation. A typical script file, called ''mpi3D.nasa'', can be found in the ipic3D directory.
+You need to modify the directory where your executable(iPIC3D) is, after cd, and the name of the inputfile for iPIC3D. In addition you need to choose the number of processors after -lnodes, and the time -l walltime.
 
 ==Monitoring Parallel Jobs on VIC==
 
