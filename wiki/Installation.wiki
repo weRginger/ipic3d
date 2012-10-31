@@ -6,7 +6,7 @@ iPIC3D is a particle in cell (PIC) code based on the implicit moment method. It 
 iPIC3D compiles with all tested MPI libraries. In particular we use regularly intel MPI, SGI MPI, MPICH2, OpenMPI. For example MPICH-2 is available at http://www.mcs.anl.gov/research/projects/mpich2/. 
 
 The following libraries are needed: <br>
--'''HDF5''' used for the output of the simulation data. This library can be downloaded at http://hdf.ncsa.uiuc.edu/HDF5. The latest version needs to be used (older ones are not compatible).
+-'''HDF5''' used for the output of the simulation data. This library can be downloaded at http://www.hdfgroup.org/HDF5/. The latest version needs to be used (older ones are not compatible).
  In order to build the HDF5 library, other two libraries can be installed first:<br>
 -'''szip''' library, availabe at ftp://ftp.hdfgroup.org/lib-external/szip/2.1/src/. <br>
 -'''zlib''' library, available at ftp://ftp.hdfgroup.org/lib-external/zlib/1.2/src. <br>
