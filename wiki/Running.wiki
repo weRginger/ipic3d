@@ -5,19 +5,19 @@
 Hi
 to use pleiades you must first load the following modules. You can do it each time you log in, or put it in your .cshrc or .bashrc depending on the unix shell you use:
 
-module purge
-module load comp-intel
-module load mpi-intel
-module load hdf5/1.8.3/intel/mpt
+ module purge 
+ module load comp-intel 
+ module load mpi-intel
+ module load hdf5/1.8.3/intel/mpt
+
 Then you can compile with the makefile attached. 
 
-
 To run the code you then need a script like the one attached. That file assumes that the code will find the input fileGEM.inp in the directory where you give the command:
-qsub mpi3D.nasa
+ qsub mpi3D.nasa
 And it assumes that the code will be able to save the data in the directory sepcified in the input file. That directory must exist. 
-The script assumes also that the code is in directory
+The script assumes also that the code is in directory:
 ~/iPic3D
-Note that it sends a message when it starts or end to my email address so you need to change that too and put yours.
+Note that it sends a message when it starts or end to the given email address so you need to change that too and put yours.
 
 Cheers
 Gainni
@@ -32,7 +32,7 @@ Gainni
 #PBS -N earthHR
 #PBS -j oe -k eo
 #PBS -m abe
-#PBS -M valsusa@gmail.com
+#PBS -M me@gmail.com
 
 echo Start: host `hostname`, date `date`
 echo PBS id is $PBS_JOBID
