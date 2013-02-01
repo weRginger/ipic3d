@@ -23,6 +23,7 @@ Cheers
 Gainni
 
 =Script for Pleiades=
+{{{
 #PBS -S /bin/csh
 
 #PBS -l walltime=12:00:00
@@ -48,9 +49,9 @@ cd ~/iPic3D
 
 mpiexec -np 512 ./iPIC3D GEM.inp
 
-
+}}}
 =MAkefile Pleiades=
-
+{{{
 DYLD_LIBRARY_PATH = /Users/gianni/Downloads/hdf5-1.6.10/hdf5/lib
 
 CPP = mpicxx
@@ -114,3 +115,5 @@ EllipticF.o:    ./mathlib/EllipticF.cpp
 
 clean:
 	rm -rf *.o iPIC3D data/*.hdf data/*.txt data/*.vtk
+
+}}}
