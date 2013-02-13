@@ -1,15 +1,21 @@
-#DYLD_LIBRARY_PATH = /users/cpa/volshevs/local/hdf5/lib
 
 CPP = mpicxx
 OPTFLAGS=  -O2 -DMPICH_IGNORE_CXX_SEEK
-# include files
-INC_HDF5 = -I/users/cpa/volshevs/local/hdf5/include
-# libs
-LIB_HDF5 = -L/users/cpa/volshevs/local/hdf5/lib
 
-HDF5LIBS = -L/users/cpa/volshevs/local/hdf5/lib/ -lhdf5 -L/users/cpa/volshevs/local/hdf5/lib/ -lhdf5_hl 
-MPELIB = -L/users/cpa/volshevs/local/mpich2-install/lib/ -lmpe
+SYSTEM=linux64
 
+ifeq ($(SYSTEM),linux64)
+  INC_HDF5 = -I/usr/local/hdf5/include
+  LIB_HDF5 = -L/usr/local/hdf5/lib
+endif
+
+ifeq ($(SYSTEM),curie)
+  INC_HDF5 = -I/usr/local/hdf5-1.8.8/include
+  LIB_HDF5 = -L/usr/local/hdf5-1.8.8/lib
+  MPELIB = -L/opt/mpi/bullxmpi/1.1.14.3/lib/
+endif
+
+HDF5LIBS = -lhdf5 -lhdf5_hl 
 
 ipic3D: iPIC3D.cpp Particles3Dcomm.o Particles3D.o ConfigFile.o
 	${CPP} ${OPTFLAGS} -o iPIC3D ${INC_HDF5} ${INC_MPI} \
